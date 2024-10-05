@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 // 受信するJSONデータの構造体
@@ -30,7 +30,7 @@ func writeHandler(w http.ResponseWriter, r *http.Request) {
 
 	message := r.FormValue("message")
 	fmt.Println(message)
-	errFile := ioutil.WriteFile("./output.txt", []byte(data.Message), 0644)
+	errFile := os.WriteFile("./output.txt", []byte(data.Message), 0644)
 	if errFile != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
