@@ -11,3 +11,10 @@ services:
       - ./:/usr/src/backend
     environment:
       - ENV_VARIABLE=example_value
+    networks:
+      - my_app_network
+      
+networks:
+  my_app_network:
+    driver: bridge
+

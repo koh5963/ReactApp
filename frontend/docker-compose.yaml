@@ -10,3 +10,9 @@ services:
     command: sh -c 'yarn start'
     ports:
       - '3000:3000'
+    networks:
+      - my_app_network
+
+networks:
+  my_app_network:
+    driver: bridge

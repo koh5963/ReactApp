@@ -2,18 +2,48 @@ import logo from './logo.svg';
 import './App.css';
 import Back from './Back';
 import root from './index';
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 function Test() {
+  const [inputValue, setInputValue] = useState('');
+  const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    setInputValue(event.target.value); // 入力値を更新
+  };
+
+  const handleClick = async () => {
+    alert("リクエストを送信しています...");
+    try {
+      alert(inputValue);
+      const sendMsg = { message: inputValue }; // 正しい形に変更
+      console.log(sendMsg);
+      await axios.post('http://localhost:8080/write', sendMsg);
+      console.log('Successfully wrote to file.');
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(`エラーが発生しました: ${error.message}`); // ユーザーにエラーメッセージを表示
+      } else {
+        alert('未知のエラーが発生しました');
+      }
+      console.error('Error writing to file:', error);
+    }
+  };
+
   return (
     <div className="Test">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p><strong>これはApp.tsxではない</strong></p>
         <div>
+          <input 
+            type="text" 
+            value={inputValue} 
+            onChange={handleChange}
+          />
+        </div>
+        <div>
             <button onClick={NewTest}>go</button>
-            <button onClick={App}>test</button>
+            <button onClick={handleClick}>test</button>
         </div>
       </header>
     </div>
@@ -29,24 +59,6 @@ function NewTest() {
             </header>
         </div>
     )
-}
-
-function App() {
-  const handleClick = async () => {
-    try {
-      await axios.post('http://localhost:8080/write', { message: 'おした！' });
-      console.log('Successfully wrote to file.');
-    } catch (error) {
-      console.error('Error writing to file:', error);
-    }
-  };
-
-  return (
-    <div>
-      <h1>React App</h1>
-      <button onClick={handleClick}>ボタン</button>
-    </div>
-  );
 }
 
 export default Test;

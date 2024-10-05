@@ -7,6 +7,8 @@ COPY package*.json ./
 
 # 依存関係のインストール
 RUN npm install
+RUN yarn install
+
 
 # # react-router-domをインストール
 # RUN npm install react-router-dom
