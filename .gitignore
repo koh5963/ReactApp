@@ -1,2 +1,3 @@
 backend/output.txt
 ./vscode/*
+.vscode/launch.json
