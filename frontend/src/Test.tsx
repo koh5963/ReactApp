@@ -12,16 +12,14 @@ function Test() {
   };
 
   const handleClick = async () => {
-    alert("リクエストを送信しています...");
     try {
-      alert(inputValue);
-      const sendMsg = { message: inputValue }; // 正しい形に変更
-      console.log(sendMsg);
-      await axios.post('http://localhost:8080/write', sendMsg);
+      const sendMsg = { message: inputValue };
+      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      await axios.post(`${backendUrl}/write`, sendMsg);
       console.log('Successfully wrote to file.');
     } catch (error) {
       if (error instanceof Error) {
-        alert(`エラーが発生しました: ${error.message}`); // ユーザーにエラーメッセージを表示
+        alert(`エラーが発生しました: ${error.message}`);
       } else {
         alert('未知のエラーが発生しました');
       }

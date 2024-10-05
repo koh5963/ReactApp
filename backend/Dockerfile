@@ -1,5 +1,5 @@
 # ベースイメージの指定
-FROM golang:1.20-alpine
+FROM golang:1.23.0-alpine
 
 # ginのインストール
 RUN go install github.com/codegangsta/gin@latest

@@ -5,14 +5,15 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    container_name: backend
     ports:
       - "8080:8080"
     volumes:
       - ./backend:/usr/src/backend
     environment:
       - ENV_VARIABLE=example_value
-    # networks:
-    #   - my_app_network
+    networks:
+      - my_app_network
 
   frontend:
     build: 
@@ -21,12 +22,14 @@ services:
     volumes:
       - ./frontend:/usr/src/frontend
     command: sh -c 'yarn start'
+    env_file:
+      - .env
     ports:
       - '3000:3000'
-#     networks:
-#       - my_app_network
+    networks:
+      - my_app_network
 
-# networks:
-#   my_app_network:
-#     driver: bridge
+networks:
+  my_app_network:
+    driver: bridge
 
