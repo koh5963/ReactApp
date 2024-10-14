@@ -12,6 +12,11 @@ type RequestData struct {
 	Message string `json:"message"`
 }
 
+type ResponseData struct {
+	Message string
+	Result  bool
+}
+
 func writeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("ここ")
 	w.Header().Set("Access-Control-Allow-Origin", "*") // CORSを許可する
@@ -32,10 +37,18 @@ func writeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(message)
 	errFile := os.WriteFile("./output.txt", []byte(data.Message), 0644)
 	if errFile != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, errFile.Error(), http.StatusInternalServerError)
 		return
 	}
-	fmt.Fprintf(w, "Successfully wrote to file.")
+	resData := ResponseData{Message: "Successfully wrote to file.", Result: true}
+	jsonData, pErr := json.Marshal(resData)
+	if pErr != nil {
+		http.Error(w, pErr.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintln(w, jsonData)
+	w.Write(jsonData)
 }
 
 func main() {

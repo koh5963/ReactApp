@@ -15,8 +15,9 @@ function Test() {
     try {
       const sendMsg = { message: inputValue };
       const backendUrl = process.env.REACT_APP_BACKEND_URL;
-      await axios.post(`${backendUrl}/write`, sendMsg);
+      const post = await axios.post(`${backendUrl}/write`, sendMsg);
       console.log('Successfully wrote to file.');
+      alert(post.data("Message"))
     } catch (error) {
       if (error instanceof Error) {
         alert(`エラーが発生しました: ${error.message}`);
@@ -42,6 +43,7 @@ function Test() {
         <div>
             <button onClick={NewTest}>go</button>
             <button onClick={handleClick}>test</button>
+            <button onClick={TableTest}>table</button>
         </div>
       </header>
     </div>
@@ -57,6 +59,93 @@ function NewTest() {
             </header>
         </div>
     )
+}
+
+function TableTest() {
+  root.render (
+    <div className='Test'>
+      <div className='App-header'>
+        <table className='Table-test'>
+          <thead>
+            <tr>
+              <th scope="col">header1</th>
+              <th scope="col">header2</th>
+              <th scope="col">header3</th>
+              <th scope="col">header4</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>データ１</td>
+              <td>データ２</td>
+              <td>データ３</td>
+              <td>データ４</td>
+            </tr>
+            <tr>
+              <td>データ１</td>
+              <td>データ２</td>
+              <td>データ３</td>
+              <td>データ４</td>
+            </tr>
+            <tr>
+              <td>データ１</td>
+              <td>データ２</td>
+              <td>データ３</td>
+              <td>データ４</td>
+            </tr>
+            <tr>
+              <td>データ１</td>
+              <td>データ２</td>
+              <td>データ３</td>
+              <td>データ４</td>
+            </tr>
+            <tr>
+              <td>データ１</td>
+              <td>データ２</td>
+              <td>データ３</td>
+              <td>データ４</td>
+            </tr>
+            <tr>
+              <td>データ１</td>
+              <td>データ２</td>
+              <td>データ３</td>
+              <td>データ４</td>
+            </tr>
+            <tr>
+              <td>データ１</td>
+              <td>データ２</td>
+              <td>データ３</td>
+              <td>データ４</td>
+            </tr>
+            <tr>
+              <td>データ１</td>
+              <td>データ２</td>
+              <td>データ３</td>
+              <td>データ４</td>
+            </tr>
+            <tr>
+              <td>データ１</td>
+              <td>データ２</td>
+              <td>データ３</td>
+              <td>データ４</td>
+            </tr>
+            <tr>
+              <td>データ１</td>
+              <td>データ２</td>
+              <td>データ３</td>
+              <td>データ４</td>
+            </tr>
+            <tr>
+              <td>データ１</td>
+              <td>データ２</td>
+              <td>データ３</td>
+              <td>データ４</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
 }
 
 export default Test;
