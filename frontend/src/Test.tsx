@@ -14,10 +14,11 @@ function Test() {
   const handleClick = async () => {
     try {
       const sendMsg = { message: inputValue };
-      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      // const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      const backendUrl = "http://localhost:8080";
       const post = await axios.post(`${backendUrl}/write`, sendMsg);
       console.log('Successfully wrote to file.');
-      alert(post.data("Message"))
+      alert('Successfully wrote to file.');
     } catch (error) {
       if (error instanceof Error) {
         alert(`エラーが発生しました: ${error.message}`);
@@ -31,21 +32,21 @@ function Test() {
   return (
     <div className="Test">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p><strong>これはApp.tsxではない</strong></p>
+      </header>
+      <body className='App-body'>
         <div>
           <input 
-            type="text" 
-            value={inputValue} 
-            onChange={handleChange}
+          type="text" 
+          value={inputValue} 
+          onChange={handleChange}
           />
         </div>
         <div>
-            <button onClick={NewTest}>go</button>
-            <button onClick={handleClick}>test</button>
-            <button onClick={TableTest}>table</button>
+          <button onClick={NewTest}>go</button>
+          <button onClick={handleClick}>test</button>
+          <button onClick={TableTest}>table</button>
         </div>
-      </header>
+      </body>
     </div>
   );
 }

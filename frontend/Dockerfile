@@ -1,4 +1,4 @@
-FROM node:20.13.1-alpine
+FROM node:23.6.0-alpine
 
 WORKDIR /usr/src/frontend
 
