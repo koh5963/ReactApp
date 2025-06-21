@@ -1,50 +1,12 @@
 package main
 
 import (
-	"context"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"os"
 )
 
-// 受信するJSONデータの構造体
-type RequestData struct {
-	Message string `json:"message"`
-}
-
-type ResponseData struct {
-	Message string
-	Result  bool
-}
-
-// MongoDBにデータを格納する関数
-func insertDataToMongo(data RequestData) error {
-	client := GetClient() // dbパッケージからclientを取得
-
-	if client == nil {
-		return fmt.Errorf("Mongo client is not initialized")
-	}
-
-	db := client.Database("test_db")
-	if db == nil {
-		return fmt.Errorf("Failed to get MongoDB database")
-	}
-
-	collection := db.Collection("message")
-	if collection == nil {
-		return fmt.Errorf("Mongo collection is nil")
-	}
-
-	// MongoDBにデータを挿入
-	_, err := collection.InsertOne(context.TODO(), data)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
+// HTTPハンドリング
 func WriteHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*") // CORSを許可する
 	if r.Method == "OPTIONS" {
@@ -68,7 +30,8 @@ func WriteHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// MongoDBにデータを挿入
-	err = insertDataToMongo(data)
+	insertData := makeInsertData(data)
+	err = insertDataToMongo(insertData)
 	if err != nil {
 		http.Error(w, "Failed to insert data into MongoDB: "+err.Error(), http.StatusInternalServerError)
 		return
